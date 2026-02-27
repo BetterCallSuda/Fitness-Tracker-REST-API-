@@ -92,3 +92,21 @@ def update_workout(workout_id):
     return jsonify(workout.to_dict())
 
 
+# -----------------------------
+# DELETE WORKOUT
+# -----------------------------
+@app.route("/workouts/<int:workout_id>", methods=["DELETE"])
+def delete_workout(workout_id):
+    workout = Workout.query.get(workout_id)
+
+    if not workout:
+        return jsonify({"error": "Workout not found"}), 404
+
+    db.session.delete(workout)
+    db.session.commit()
+
+    return jsonify({"message": "Workout deleted"})
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
