@@ -22,3 +22,17 @@ class User(db.Model):
             "email": self.email
         }
 
+
+# -----------------------------
+# WORKOUT MODEL
+# -----------------------------
+class Workout(db.Model):
+    __tablename__ = "workouts"
+
+    id = db.Column(db.Integer, primary_key=True)
+    workout_type = db.Column(db.String(100), nullable=False)
+    duration_minutes = db.Column(db.Integer, nullable=False)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user = db.relationship("User", back_populates="workouts")
