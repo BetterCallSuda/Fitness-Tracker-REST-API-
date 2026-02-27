@@ -28,3 +28,13 @@ def create_user():
     db.session.commit()
 
     return jsonify(user.to_dict()), 201
+
+
+
+# -----------------------------
+# GET ALL USERS
+# -----------------------------
+@app.route("/users", methods=["GET"])
+def get_users():
+    users = User.query.all()
+    return jsonify([user.to_dict() for user in users])
