@@ -72,4 +72,23 @@ def get_workouts():
     workouts = Workout.query.all()
     return jsonify([workout.to_dict() for workout in workouts])
 
+# -----------------------------
+# UPDATE WORKOUT
+# -----------------------------
+@app.route("/workouts/<int:workout_id>", methods=["PUT"])
+def update_workout(workout_id):
+    workout = Workout.query.get(workout_id)
+
+    if not workout:
+        return jsonify({"error": "Workout not found"}), 404
+
+    data = request.get_json()
+
+    workout.workout_type = data.get("workout_type", workout.workout_type)
+    workout.duration_minutes = data.get("duration_minutes", workout.duration_minutes)
+
+    db.session.commit()
+
+    return jsonify(workout.to_dict())
+
 
