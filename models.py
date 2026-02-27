@@ -36,3 +36,13 @@ class Workout(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     user = db.relationship("User", back_populates="workouts")
+
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "workout_type": self.workout_type,
+            "duration_minutes": self.duration_minutes,
+            "date": self.date,
+            "user": self.user.name
+        }
